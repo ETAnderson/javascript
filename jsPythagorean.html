@@ -1,0 +1,95 @@
+<input type="text" id="a" />
+<input type="text" id="b" />
+<input type="submit" id="calc" value="Calc" />
+<input type="text" id="result" disabled="disabled" />
+<script>
+var aText = document.getElementById('a'),
+    bText = document.getElementById('b'),
+    calc = document.getElementById('calc'),
+    result = document.getElementById('result');
+
+calc.onclick = function() {
+	var a = parseInt(aText.value),
+	    b = parseInt(bText.value);
+	if (isNaN(a) && isNaN(b)) {
+		result.value = 'Invalid a and b';
+	} else if (isNaN(a)) {
+		result.value = 'Invalid a';
+	} else if (isNaN(b)) {
+		result.value = "Invalid b";
+	} else {
+		result.value = pythagorean(a, b);
+	}
+};
+
+function assert (condition, message) {
+	if (!condition) {
+		throw new Error(message);
+	}
+}
+
+function validatePythag(a, b) {
+	return a > 0 && b > 0;
+}
+
+assert(validatePythag(3, 4), "1")
+assert(!validatePythag(3, -4), "2")
+assert(!validatePythag(-3, 4), "3")
+assert(!validatePythag(-3, -4), "4")
+
+function pythagorean(a, b) {
+	if (!validatePythag(a, b)){
+		throw new Error(" invalid number");
+	}
+	var c = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+	return c;
+}
+
+function printPythagorean(a, b) {
+	var c = pythagorean(a, b);
+	console.log(c);
+}
+
+try {
+	printPythagorean(3, 4);
+	printPythagorean(3, -4);
+} catch(e) {
+	console.log("the Baby has no job", e)
+}
+
+function area (length, height) {
+	return length * height;
+}
+
+function renderArea (length, height) {
+	var a = area(length, height);
+	return "with a length of "+length+
+		" and a height of "+height+
+		", an area of "+area(length, height)+" is returned";
+}
+
+function printArea (length, height) {
+	console.log(renderArea(length, height));
+}
+
+function volume (length, height, width) {
+	return length * width * height;
+}
+
+function renderVolume (length, height, width) {
+	var v = volume(length, height, width);
+	return "with a length of "+length+
+		", a height of "+height+
+		" and a width of "+width+
+		", a volume of "+v+" is returned";
+}
+
+function printVolume (length, height, width) {
+	console.log(renderVolume(length, height, width));
+}
+
+printArea(2, 3);
+printArea(3, 4);
+printVolume(2, 3, 3);
+printVolume(3, 4, 5);
+</script>

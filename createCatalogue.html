@@ -1,0 +1,65 @@
+<script>
+
+function EntityList() {}
+
+EntityList.prototype.isUnique = function(items, item) {
+	return items.filter(function(i) { return i.name == item.name; }).length == 0;
+}
+
+EntityList.prototype.addItem = function(items, item) {
+	if (!this.isUnique(items, item)) {
+		throw new Error("Already contains " + item.name);
+	}
+	items.push(item);
+}
+
+function Catalogue() {
+	this.artists = [];
+};
+
+Catalogue.prototype = new EntityList();
+
+Catalogue.prototype.addArtist = function(artist) {
+	this.addItem(this.artists, artist);
+}
+
+Catalogue.prototype.print = function() {
+  console.log(this.artists.length + ' Artists:');
+  this.artists.forEach(function(artist) {
+    console.log('\t' + artist.name + '\'s ' + artist.albums.length + ' ' + artist.genre + ' albums:');
+    artist.albums.forEach(function(album) {
+      console.log('\t\t' + album.name + '\'s ' + album.songs.length + ' ' + artist.genre + ' songs:');
+      console.log('\t\t\t' + album.songs.map(function(song) { return song.name; }).join(', '));
+    });
+  });
+};
+
+function Artist(name, genre) {
+	this.name = name;
+	this.genre = genre;
+	this.albums = [];
+}
+
+Artist.prototype = new EntityList();
+
+Artist.prototype.addAlbum = function(album) {
+	this.addItem(this.albums, album);
+}
+
+function Album(name) {
+	this.name = name;
+	this.songs = [];
+}
+
+Album.prototype = new EntityList();
+
+Album.prototype.addSong = function(song) {
+	this.addItem(this.songs, song);
+}
+
+function Song(name, duration) {
+	this.name = name;
+	this.duration = duration;
+}
+
+</script>

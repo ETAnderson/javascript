@@ -1,0 +1,60 @@
+<script>
+
+function createLibrary() {
+	return {
+		books: [],
+		addBook: function(name, author, pages) {
+			var book = {
+				name: name,
+				author: author,
+				pages: pages
+			};
+			this.books.push(book);	
+		},
+		removeBook: function(name, author) {
+			for (var i = 0; i < this.books.length; i++) {
+				var book = this.books[i];
+				if (book.name == name && book.author == author) {
+					this.books.splice(i, 1);
+					i--;
+				}
+			}
+		},
+		averagePageCount: function() {
+			var sum = 0;
+			for (var i = 0; i < this.books.length; i++) {
+				sum += this.books[i].pages;
+			}
+			return sum / this.books.length;
+		},
+		averagePageCount2: function() {
+			return this.totalPages() / this.books.length;
+		},
+		totalPages: function() {
+			return this.books.reduce(function(sum, book) { return sum + book.pages; }, 0);
+		},
+		totalBookCount: function() {
+			return this.books.length;
+		},
+		sortByAuthor: function() {
+			return this.books.sort(function(a, b) {
+				return a.author > b.author;
+			});
+		},
+		sortByName: function() {
+			return this.books.sort(function(a, b) {
+				return a.name > b.name;
+			});
+		}
+	};
+}
+
+
+
+var library = createLibrary();
+library.addBook("nameA", "authorA", 123);
+library.addBook("nameB", "authorB", 456);
+console.log(library, library.averagePageCount(), library.totalBookCount(), library.sortByAuthor(), library.sortByName());
+
+
+</script>
